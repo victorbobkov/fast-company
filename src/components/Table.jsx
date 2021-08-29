@@ -1,35 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
+import API from '../api'
 
 const Table = () => {
+   const [users, setUsers] = useState(API.users.fetchAll())
+   const user = users.map(elem => {
+      return (
+         <tr key={elem._id}>
+            <td>{elem.name}</td>
+            <td>
+               {elem.qualities.map(({ _id, name, color }) => (
+                  <span key={_id} className={`badge bg-${color} me-2`}>
+                {name}
+              </span>
+               ))}
+            </td>
+            <td>{elem.profession.name}</td>
+            <td>{elem.completedMeetings}</td>
+            <td>{elem.rate}</td>
+            <td>
+               <button className="btn btn-danger">Удалить</button>
+            </td>
+         </tr>
+      )
+   })
+
    return (
-      <table className="table">
-         <thead>
-         <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">Качества</th>
-            <th scope="col">Профессия</th>
-            <th scope="col">Встретился, раз</th>
-            <th scope="col">Оценка</th>
-            <th scope="col"> </th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr>
-            <td>Джон Дориан</td>
-            <td>
-               <span className="badge bg-primary">Нудила</span>
-               <span className="badge bg-dark">Неуверенный</span>
-               <span className="badge bg-secondary">Странный</span>
-            </td>
-            <td>Доктор</td>
-            <td>36</td>
-            <td>2.5/5</td>
-            <td>
-               <button type="button" className="btn btn-danger">delete</button>
-            </td>
-         </tr>
-         </tbody>
-      </table>
+      <div className="wrapper">
+         <table className="table">
+            <thead>
+            <tr>
+               <th scope="col">Имя</th>
+               <th scope="col">Качества</th>
+               <th scope="col">Профессия</th>
+               <th scope="col">Встретился, раз</th>
+               <th scope="col">Оценка</th>
+               <th scope="col"/>
+            </tr>
+            </thead>
+            <tbody>
+            {user}
+            </tbody>
+         </table>
+      </div>
    )
 }
 
