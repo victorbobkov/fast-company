@@ -2,23 +2,35 @@ import React, { useState } from 'react'
 import API from '../api'
 
 const Table = () => {
+
    const [users, setUsers] = useState(API.users.fetchAll())
-   const user = users.map(elem => {
+   const handleDelete = (userId) => {
+      setUsers((state) => {
+         return state.filter(({ _id }) => _id !== userId)
+      })
+   }
+
+      const user = users.map(elem => {
       return (
          <tr key={elem._id}>
             <td>{elem.name}</td>
             <td>
                {elem.qualities.map(({ _id, name, color }) => (
                   <span key={_id} className={`badge bg-${color} me-2`}>
-                {name}
+                { name }
               </span>
                ))}
             </td>
             <td>{elem.profession.name}</td>
             <td>{elem.completedMeetings}</td>
-            <td>{elem.rate}</td>
+            <td>{elem.rate}/5</td>
             <td>
-               <button className="btn btn-danger">Удалить</button>
+               <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(elem._id)}
+               >
+                  Удалить
+               </button>
             </td>
          </tr>
       )
@@ -38,7 +50,7 @@ const Table = () => {
             </tr>
             </thead>
             <tbody>
-            {user}
+               { user }
             </tbody>
          </table>
       </div>
