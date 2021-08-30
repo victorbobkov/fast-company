@@ -10,7 +10,13 @@ const Table = () => {
       })
    }
 
-      const user = users.map(elem => {
+   const renderPhrase = (number) => {
+      if (!number) return 'Никто с тобой не тусанет'
+      const a = number >= 2 && number >= 5 ? '' : 'а'
+      return number === 1 ? `${number} человек тусанет с тобой сегодня` : `${number} человек${a} тусанут с тобой сегодня`
+   }
+
+   const user = users.map(elem => {
       return (
          <tr key={elem._id}>
             <td>{elem.name}</td>
@@ -38,7 +44,13 @@ const Table = () => {
 
    return (
       <div className="wrapper">
+         <h1 className="mb-4">
+               <span className={`badge ${users.length ? 'bg-primary' : 'bg-danger'}`}>
+                  {renderPhrase(users.length)}
+               </span>
+         </h1>
          <table className="table">
+
             <thead>
             <tr>
                <th scope="col">Имя</th>
@@ -50,7 +62,7 @@ const Table = () => {
             </tr>
             </thead>
             <tbody>
-               { user }
+            { user }
             </tbody>
          </table>
       </div>
