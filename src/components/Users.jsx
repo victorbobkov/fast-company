@@ -1,9 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
+import Pagination from './Pagination'
+import {paginate} from '../utils/paginate'
 import User from './User'
 import Header from './Header'
 
 const Users = ({ users, onDelete, onToggleBookmark }) => {
-   const rows = users.map((user) => (
+   const count = users.length
+   const pageSize = 4
+   const [currentPage, setCurrentPage] = useState(1)
+   const handlePageChange = (pageIndex) => {
+      console.log('page', pageIndex)
+      setCurrentPage(pageIndex)
+   }
+   const userCrop = paginate(users, currentPage, pageSize)
+
+   const rows = userCrop.map((user) => (
       <User
          key={user._id}
          {...user}
@@ -24,6 +35,12 @@ const Users = ({ users, onDelete, onToggleBookmark }) => {
                <tbody>{rows}</tbody>
             </table>
          )}
+         <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+         />
       </div>
    )
 }
