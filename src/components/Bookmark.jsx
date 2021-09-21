@@ -1,18 +1,15 @@
-import React from 'react'
-
-const Bookmark = ({onToggleBookmark, id, status}) => {
-
-   let classes = 'bi bi-bookmark'
-   classes = status ? classes + '-star-fill' : classes
-
+import React from "react"
+import PropTypes from "prop-types"
+const Bookmark = ({ status, ...rest }) => {
    return (
-      <span
-         onClick={() => onToggleBookmark(id)}
-         className="btn btn-bookmark"
-      >
-      <i className={classes} />
-    </span>
+      <button {...rest}>
+         <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+      </button>
    )
+}
+
+Bookmark.propTypes = {
+   status: PropTypes.bool
 }
 
 export default Bookmark

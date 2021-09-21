@@ -1,48 +1,53 @@
 import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 import Pagination from './Pagination'
 import {paginate} from '../utils/paginate'
 import User from './User'
-import Header from './Header'
 
-const Users = ({ users, onDelete, onToggleBookmark }) => {
-   const count = users.length
-   const pageSize = 4
+const Users = ({ users: allUsers, ...rest }) => {
    const [currentPage, setCurrentPage] = useState(1)
+   const count = allUsers.length
+   const pageSize = 4
+
    const handlePageChange = (pageIndex) => {
-      console.log('page', pageIndex)
       setCurrentPage(pageIndex)
+      console.log("page: ", pageIndex)
    }
-   const userCrop = paginate(users, currentPage, pageSize)
 
-   const rows = userCrop.map((user) => (
-      <User
-         key={user._id}
-         {...user}
-         onDelete={onDelete}
-         onToggleBookmark={onToggleBookmark}
-      />
-   ))
-
+   const usersCrop = paginate(allUsers, currentPage, pageSize)
    return (
-      <div>
-         {users.length && (
+      <>
+         {count > 0 && (
             <table className="table">
                <thead>
                <tr>
-                  <Header />
+                  <th scope="col">Имя</th>
+                  <th scope="col">Качества</th>
+                  <th scope="col">Профессия</th>
+                  <th scope="col">Встретился, раз</th>
+                  <th scope="col">Оценка</th>
+                  <th scope="col">Избранное</th>
+                  <th />
                </tr>
                </thead>
-               <tbody>{rows}</tbody>
+               <tbody>
+               {usersCrop.map((user) => (
+                  <User {...rest} {...user} key={user._id} />
+               ))}
+               </tbody>
             </table>
          )}
          <Pagination
             itemsCount={count}
             pageSize={pageSize}
-            onPageChange={handlePageChange}
             currentPage={currentPage}
+            onPageChange={handlePageChange}
          />
-      </div>
+      </>
    )
+}
+Users.propTypes = {
+   users: PropTypes.array
 }
 
 export default Users
