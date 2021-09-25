@@ -3,7 +3,7 @@ export const professions = {
    waiter: { _id: "67rdca3eeb7f6fgeed471820", name: "Официант" },
    physics: { _id: "67rdca3eeb7f6fgeed471814", name: "Физик" },
    engineer: { _id: "67rdca3eeb7f6fgeed471822", name: "Инженер" },
-   actor: { _id: "67rdca3eeb7f6fgeed471824", name: "Актер" },
+   actor: { _id: "67rdca3eeb7f6fgeed471824", name: "Актёр" },
    cook: { _id: "67rdca3eeb7f6fgeed471829", name: "Повар" }
 }
 

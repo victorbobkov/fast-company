@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import Users from './components/Users'
 import api from './api'
-import SearchStatus from './components/SearchStatus'
 
 const App = () => {
    const [users, setUsers] = useState(api.users.fetchAll())
@@ -22,7 +21,6 @@ const App = () => {
 
    return (
       <div>
-         <SearchStatus length={users.length} />
          <Users
             onDelete={handleDelete}
             onToggleBookmark={handleToggleBookmark}
