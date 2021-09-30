@@ -12,7 +12,7 @@ const Users = ({users: allUsers, ...rest}) => {
    const [professions, setProfession] = useState()
    const [selectedProf, setSelectedProf] = useState()
 
-   const pageSize = 2
+   const pageSize = 4
 
    useEffect(() => {
       api.professions.fetchAll()
@@ -34,7 +34,7 @@ const Users = ({users: allUsers, ...rest}) => {
    }
 
    const filteredUsers = selectedProf
-      ? allUsers.filter((user) => user.profession === selectedProf)
+      ? allUsers.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
       : allUsers
 
    const count = filteredUsers.length
@@ -99,7 +99,9 @@ const Users = ({users: allUsers, ...rest}) => {
    )
 }
 Users.propTypes = {
-   users: PropTypes.array
+   users: PropTypes.array.isRequired,
+   onDelete: PropTypes.func.isRequired,
+   onToggleBookmark: PropTypes.func.isRequired
 }
 
 export default Users
