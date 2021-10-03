@@ -1,29 +1,56 @@
 import React from 'react'
-import User from './User'
 import PropTypes from 'prop-types'
 import TableHeader from './TableHeader'
+import TableBody from './TableBody'
+import Bookmark from './Bookmark'
 
-const UsersTable = ({users, onSort, selectedSort, ...rest}) => {
+const UsersTable = ({
+   users,
+   onSort,
+   selectedSort,
+   onToggleBookmark,
+   onDelete,
+   ...rest
+}) => {
    const columns = {
-      name: {iter: 'name', name: 'Имя'},
+      name: {path: 'name', name: 'Имя'},
       qualities: {name: 'Качества'},
-      professions: {iter: 'profession.name', name: 'Профессия'},
+      professions: {path: 'profession.name', name: 'Профессия'},
       completedMeetings: {
-         iter: 'completedMeetings',
+         path: 'completedMeetings',
          name: 'Встретился, раз'
       },
-      rate: {iter: 'rate', name: 'Оценка'},
-      bookmark: {iter: 'bookmark', name: 'Избранное'},
-      delete: {}
+      rate: {path: 'rate', name: 'Оценка'},
+      bookmark: {
+         path: 'bookmark',
+         name: 'Избранное',
+         component: (user) => (
+            <Bookmark
+               status={user.bookmark}
+               onClick={() => onToggleBookmark(user._id)}
+            />
+         )
+      },
+      delete: {
+         component: (user) => (
+            <button
+               onClick={() => onDelete(user._id)}
+               className="btn btn-danger"
+            >
+               delete
+            </button>
+         )
+      }
    }
    return (
       <table className="table">
          <TableHeader {...{onSort, selectedSort, columns}} />
-         <tbody>
-         {users.map((user) => (
-            <User {...rest} {...user} key={user._id}/>
-         ))}
-         </tbody>
+         <TableBody {...{columns, data: users}} />
+         {/*<tbody>*/}
+         {/*{users.map((user) => (*/}
+         {/*   <User {...rest} {...user} key={user._id}/>*/}
+         {/*))}*/}
+         {/*</tbody>*/}
       </table>
    )
 }
@@ -31,7 +58,9 @@ const UsersTable = ({users, onSort, selectedSort, ...rest}) => {
 UsersTable.propTypes = {
    users: PropTypes.array.isRequired,
    onSort: PropTypes.func.isRequired,
-   selectedSort: PropTypes.object.isRequired
+   selectedSort: PropTypes.object.isRequired,
+   onToggleBookmark: PropTypes.func.isRequired,
+   onDelete: PropTypes.func.isRequired
 }
 
 export default UsersTable
