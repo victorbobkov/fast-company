@@ -13,6 +13,15 @@ const TableHeader = ({onSort, selectedSort, columns}) => {
       }
    }
 
+   const renderColumnArrow = (column) => {
+      if (columns[column].path === selectedSort.path) {
+         return selectedSort.order === "asc"
+            ? <i className="bi bi-caret-up-fill"></i>
+            : <i className="bi bi-caret-down-fill"></i>
+      }
+      return null
+   }
+
    return (
       <thead>
          <tr>
@@ -25,30 +34,15 @@ const TableHeader = ({onSort, selectedSort, columns}) => {
                         : undefined
                   }
                   {...{role: columns[column].path && 'button'}}
-                  scope="col"
+                  scope='col'
                >
                   {columns[column].name}
+                  {renderColumnArrow(column)}
                </th>
             ))}
-
-            {/*<th scope="col">*/}
-            {/*   Качества*/}
-            {/*</th>*/}
-            {/*<th onClick={() => handleSort('profession.name')} scope="col">*/}
-            {/*   Профессия*/}
-            {/*</th>*/}
-            {/*<th onClick={() => handleSort('completedMeetings')} scope="col">*/}
-            {/*   Встретился, раз*/}
-            {/*</th>*/}
-            {/*<th onClick={() => handleSort('rate')} scope="col">*/}
-            {/*   Оценка*/}
-            {/*</th>*/}
-            {/*<th onClick={() => handleSort('bookmark')} scope="col">*/}
-            {/*   Избранное*/}
-            {/*</th>*/}
-            {/*<th/>*/}
          </tr>
-      </thead>)
+      </thead>
+   )
 }
 
 TableHeader.propTypes = {
