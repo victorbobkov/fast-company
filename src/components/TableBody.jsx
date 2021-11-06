@@ -11,6 +11,7 @@ const TableBody = ({data, columns}) => {
          }
          return component
       }
+      if (columns[column].path === 'rate') return _.get(item, columns[column].path) + " / 5"
       return _.get(item, columns[column].path)
    }
    

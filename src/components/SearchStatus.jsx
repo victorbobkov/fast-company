@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const renderPhrase = (number) => {
    if (!number) return 'Никто с тобой не тусанет'
@@ -16,6 +17,10 @@ const SearchStatus = ({length}) => {
       </span>
       </h1>
    )
+}
+
+SearchStatus.propTypes = {
+   length: PropTypes.number.isRequired,
 }
 
 export default SearchStatus

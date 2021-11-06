@@ -3,17 +3,23 @@ import PropTypes from 'prop-types'
 import Bookmark from './Bookmark'
 import QualitiesList from './QualitiesList'
 import Table from './Table'
+import Name from './name'
+import TableHeader from './TableHeader'
+import TableBody from './TableBody'
 
 const UsersTable = ({
    users,
    onSort,
    selectedSort,
    onToggleBookmark,
-   onDelete,
-   ...rest
+   onDelete
 }) => {
    const columns = {
-      name: {path: 'name', name: 'Имя'},
+      name: {
+         name: "Имя",
+         path: "name",
+         component: (user) => <Name name={user.name} id={user._id} />
+      },
       qualities: {name: 'Качества', component: (user) => (<QualitiesList qualities={user.qualities} />)},
       professions: {path: 'profession.name', name: 'Профессия'},
       completedMeetings: {
@@ -26,8 +32,9 @@ const UsersTable = ({
          name: 'Избранное',
          component: (user) => (
             <Bookmark
+               onToggleBookmark={onToggleBookmark}
+               id={user._id}
                status={user.bookmark}
-               onClick={() => onToggleBookmark(user._id)}
             />
          )
       },
@@ -37,7 +44,7 @@ const UsersTable = ({
                onClick={() => onDelete(user._id)}
                className="btn btn-danger"
             >
-               delete
+               Удалить
             </button>
          )
       }
@@ -48,7 +55,10 @@ const UsersTable = ({
          selectedSort={selectedSort}
          columns={columns}
          data={users}
-      />
+      >
+         <TableHeader {...{onSort, selectedSort, columns}} />
+         <TableBody {...{columns, data: users}} />
+      </Table>
    )
 }
 

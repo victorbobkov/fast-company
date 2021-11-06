@@ -6,7 +6,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
    const pagesCount = Math.ceil(itemsCount / pageSize)
    const pages = _.range(1, pagesCount + 1)
 
-   if (pagesCount === 1) return null;
+   if (pagesCount === 1) return null
    return (
       <nav>
          <ul className="pagination">
@@ -15,9 +15,9 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
                   key={page}
                   className={page === currentPage ? "page-item active" : "page-item"}
                >
-            <span onClick={() => onPageChange(page)} className="page-link" role="button">
-              {page}
-            </span>
+               <span onClick={() => onPageChange(page)} className="page-link" role="button">
+                 {page}
+               </span>
                </li>
             ))}
          </ul>
