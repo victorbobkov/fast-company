@@ -62,7 +62,7 @@ const Users = ({users: allUsers, onDelete, onToggleBookmark}) => {
                      onItemSelect={handleProfessionSelect}
                   />
                   <button className='btn btn-secondary mt-3' onClick={clearFilter}>
-                     Отобразить всех
+                     Очистить
                   </button>
                </div>
             )}
@@ -89,8 +89,6 @@ const Users = ({users: allUsers, onDelete, onToggleBookmark}) => {
          </div>
       </>
    )
-
-
 }
 
 Users.propTypes = {

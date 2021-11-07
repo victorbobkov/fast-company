@@ -13,16 +13,16 @@ const UserList = () => {
    const [currentPage, setCurrentPage] = useState(1)
    const [professions, setProfessions] = useState()
    const [selectedProf, setSelectedProf] = useState()
-   const [sortBy, setSortBy] = useState({path: 'name', order: 'asc'})
+   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
    const [users, setUsers] = useState()
-   const pageSize = 8
+   const pageSize = 8;
 
    useEffect(() => {
-      api.users.fetchAll().then((data) => setUsers(data))
+      api.users.fetchAll().then((data) => setUsers(data));
    }, [])
 
    const handleDelete = (userId) => {
-      setUsers((state) => state.filter(({ _id }) => _id !== userId))
+      setUsers((state) => state.filter(({ _id }) => _id !== userId));
    }
 
    const handleToggleBookmark = (userId) => {
@@ -33,15 +33,15 @@ const UserList = () => {
    }
 
    useEffect(() => {
-      api.professions.fetchAll().then((data) => setProfessions(data))
+      api.professions.fetchAll().then((data) => setProfessions(data));
    }, [])
 
    useEffect(() => {
-      setCurrentPage(1)
+      setCurrentPage(1);
    }, [selectedProf])
 
    const handleProfessionsSelect = (item) => {
-     selectedProf(item)
+     setSelectedProf(item)
    }
 
    const handlePageChange = (pageIndex) => {
@@ -64,7 +64,7 @@ const UserList = () => {
       const usersCrop = paginate(sortedUsers, currentPage, pageSize)
 
       const clearFilter = () => {
-         selectedProf()
+         setSelectedProf()
       }
 
       if (!usersCrop.length && currentPage) {
@@ -83,7 +83,7 @@ const UserList = () => {
                         onItemSelect={handleProfessionsSelect}
                      />
                      <button className='btn btn-secondary mt-3' onClick={clearFilter}>
-                        Отобразить всех
+                        Очистить
                      </button>
                   </div>
                )}
