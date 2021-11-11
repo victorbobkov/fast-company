@@ -1,11 +1,30 @@
 import React, {useEffect, useState} from 'react'
 import {validator} from '../../utils/validator'
 import TextField from '../common/form/textField'
+import api from '../../api'
+import SelectField from '../common/form/selectField'
+import RadioField from '../common/form/radioField'
+import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
 
-const LoginForm = () => {
-   const [data, setData] = useState({email: '', password: '', stayOn: false})
+const RegisterForm = () => {
+   const [data, setData] = useState({
+      email: '',
+      password: '',
+      profession: '',
+      gender: 'male',
+      qualities: [],
+      licence: false
+   })
+
+   const [qualities, setQualities] = useState({})
+   const [professions, setProfession] = useState()
    const [errors, setErrors] = useState({})
+
+   useEffect(() => {
+      api.professions.fetchAll().then((data) => setProfession(data))
+      api.qualities.fetchAll().then((data) => setQualities(data))
+   }, [])
 
    const handleChange = (target) => {
       setData((prevState) => ({
@@ -37,16 +56,29 @@ const LoginForm = () => {
             message: 'Пароль должен состаять миниму из 8 символов',
             value: 8
          }
+      },
+      profession: {
+         isRequired: {
+            message: 'Обязательно выберите вашу профессию'
+         }
+      },
+      licence: {
+         isRequired: {
+            message: "Вы не можете использовать наш сервис без подтверждения лиценщзионного соглашения"
+         }
       }
    }
+
    useEffect(() => {
       validate()
    }, [data])
+
    const validate = () => {
       const errors = validator(data, validatorConfog)
       setErrors(errors)
       return Object.keys(errors).length === 0
    }
+
    const isValid = Object.keys(errors).length === 0
 
    const handleSubmit = (e) => {
@@ -55,6 +87,7 @@ const LoginForm = () => {
       if (!isValid) return
       console.log(data)
    }
+
    return (
       <form onSubmit={handleSubmit}>
          <TextField
@@ -72,12 +105,39 @@ const LoginForm = () => {
             onChange={handleChange}
             error={errors.password}
          />
-         <CheckBoxField
-            value={data.stayOn}
+         <SelectField
+            label="Выберите вашу профессию"
+            defaultOption="Choose..."
+            options={professions}
             onChange={handleChange}
-            name="stayOn"
+            value={data.profession}
+            error={errors.profession}
+         />
+         <RadioField
+            options={[
+               {name: 'Male', value: 'male'},
+               {name: 'Female', value: 'female'},
+               {name: 'Other', value: 'other'}
+            ]}
+            value={data.gender}
+            name="gender"
+            onChange={handleChange}
+            label="Выберите пол"
+         />
+         <MultiSelectField
+            options={qualities}
+            onChange={handleChange}
+            name="qualities"
+            defaultValue={data.qualities}
+            label="Выберите ваши качества"
+         />
+         <CheckBoxField
+            value={data.licence}
+            onChange={handleChange}
+            name="licence"
+            error={errors.licence}
          >
-            Оставаться в системе
+            Подтвердить <a>лицензионное соглашение</a>
          </CheckBoxField>
          <button
             type="submit"
@@ -89,4 +149,5 @@ const LoginForm = () => {
       </form>
    )
 }
-export default LoginForm
+
+export default RegisterForm

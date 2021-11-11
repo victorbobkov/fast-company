@@ -12,7 +12,7 @@ const qualities = {
     },
     buller: {
         _id: "67rdca3eeb7f6fgeed4711012",
-        name: "Тролль",
+        name: "Троль",
         color: "success"
     },
     alcoholic: {
