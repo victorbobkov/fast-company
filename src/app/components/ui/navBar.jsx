@@ -19,7 +19,7 @@ const NavBar = () => {
                 </Link>
             </li>
         </ul>
-    );
-};
+    )
+}
 
-export default NavBar;
+export default NavBar
