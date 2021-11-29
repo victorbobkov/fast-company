@@ -3,7 +3,7 @@ import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
-import RadioField from "../common/form/radioField";
+import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 
@@ -100,8 +100,8 @@ const RegisterForm = () => {
             />
             <SelectField
                 label="Выбери свою профессию"
-                name="profession"
                 defaultOption="Choose..."
+                name="profession"
                 options={professions}
                 onChange={handleChange}
                 value={data.profession}
@@ -119,7 +119,6 @@ const RegisterForm = () => {
                 label="Выберите ваш пол"
             />
             <MultiSelectField
-                defaultValue={data.qualities}
                 options={qualities}
                 onChange={handleChange}
                 name="qualities"

@@ -5,7 +5,7 @@ import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
-import Profession from './profession'
+import Profession from "./profession";
 
 const UserTable = ({
     users,
