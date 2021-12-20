@@ -9,6 +9,7 @@ import {ToastContainer} from 'react-toastify'
 import {ProfessionProvider} from './hooks/useProfession'
 import {QualitiesProvider} from './hooks/useQualities'
 import AuthProvider from './hooks/useAuth'
+import LoginProvider from './hooks/useLogin'
 
 function App() {
    return (
@@ -17,15 +18,17 @@ function App() {
             <NavBar/>
             <QualitiesProvider>
                <ProfessionProvider>
-                  <Switch>
-                     <Route
-                        path="/users/:userId?/:edit?"
-                        component={Users}
-                     />
-                     <Route path="/login/:type?" component={Login}/>
-                     <Route path="/" exact component={Main}/>
-                     <Redirect to="/"/>
-                  </Switch>
+                  <LoginProvider>
+                     <Switch>
+                        <Route
+                           path="/users/:userId?/:edit?"
+                           component={Users}
+                        />
+                        <Route path="/login/:type?" component={Login}/>
+                        <Route path="/" exact component={Main}/>
+                        <Redirect to="/"/>
+                     </Switch>
+                  </LoginProvider>
                </ProfessionProvider>
             </QualitiesProvider>
          </AuthProvider>
