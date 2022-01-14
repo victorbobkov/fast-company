@@ -23,7 +23,7 @@ const LoginForm = () => {
         setEnterError(null);
     }
 
-    const validatorConfog = {
+    const validatorConfig = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -39,7 +39,7 @@ const LoginForm = () => {
         validate()
     }, [data])
     const validate = () => {
-        const errors = validator(data, validatorConfog)
+        const errors = validator(data, validatorConfig)
         setErrors(errors)
         return Object.keys(errors).length === 0
     }
@@ -52,7 +52,12 @@ const LoginForm = () => {
 
         try {
             await logIn(data)
-            history.push("/")
+            console.log(history.location.state.from.pathname)
+            history.push(
+               history.location.state.from.pathname
+                  ? history.location.state.from.pathname
+                  : "/"
+            )
         } catch (error) {
             setEnterError(error.message)
         }
