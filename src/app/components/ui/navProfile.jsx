@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
-import {useAuth} from '../../hooks/useAuth'
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useAuth } from '../../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 const NavProfile = () => {
-   const {currentUser} = useAuth()
+   const { currentUser } = useAuth()
    const [isOpen, setOpen] = useState(false)
    const toggleMenu = () => {
       setOpen(prevState => !prevState)

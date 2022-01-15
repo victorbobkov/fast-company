@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import userService from '../services/user.service'
-import {toast} from 'react-toastify'
-import localStorageService, {removeAuthData, setTokens} from '../services/localStorage.service'
-import {useHistory} from 'react-router-dom'
+import { toast } from 'react-toastify'
+import localStorageService, { removeAuthData, setTokens } from '../services/localStorage.service'
+import { useHistory } from 'react-router-dom'
 
 export const httpAuth = axios.create({
    baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -44,7 +44,6 @@ const AuthProvider = ({ children }) => {
             switch (message) {
                case "INVALID_PASSWORD":
                   throw new Error("Email или пароль введены некорректно")
-
                default:
                   throw new Error(
                      "Слишком много попыток входа. Попробуйте позже"
@@ -128,6 +127,7 @@ const AuthProvider = ({ children }) => {
          setLoading(false)
       }
    }, [])
+
    useEffect(() => {
       if (error !== null) {
          toast(error)

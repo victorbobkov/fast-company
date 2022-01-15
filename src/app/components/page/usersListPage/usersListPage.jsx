@@ -9,7 +9,6 @@ import _ from "lodash"
 import { useUser } from "../../../hooks/useUsers"
 import {useProfessions} from '../../../hooks/useProfession'
 import {useAuth} from '../../../hooks/useAuth'
-import data from 'bootstrap/js/src/dom/data'
 
 const UsersListPage = () => {
     const { users } = useUser()
