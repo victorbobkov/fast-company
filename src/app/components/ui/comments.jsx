@@ -1,27 +1,24 @@
-import { orderBy } from "lodash"
-import React from "react"
-import CommentsList, { AddCommentForm } from "../common/comments"
-import {useComments} from '../../hooks/useComments'
+import { orderBy } from "lodash";
+import React from "react";
+import CommentsList, { AddCommentForm } from "../common/comments";
+import { useComments } from "../../hooks/useComments";
 
 const Comments = () => {
-    const {createComment, comments, removeComment} = useComments()
+    const { createComment, comments, removeComment } = useComments();
 
     const handleSubmit = (data) => {
-        createComment(data)
+        createComment(data);
         // api.comments
-        //     .add({ ...data, pageId: userId })
-        //     .then((data) => setComments([...comments, data]))
-    }
-
+        //     .add({ ...data, pageId: userId, })
+        //     .then((data) => setComments([...comments, data]));
+    };
     const handleRemoveComment = (id) => {
-        removeComment(id)
+        removeComment(id);
         // api.comments.remove(id).then((id) => {
-        //     setComments(comments.filter((x) => x._id !== id))
-        // })
-    }
-
-    const sortedComments = orderBy(comments, ["created_at"], ["desc"])
-
+        //     setComments(comments.filter((x) => x._id !== id));
+        // });
+    };
+    const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
     return (
         <>
             <div className="card mb-2">
@@ -43,7 +40,7 @@ const Comments = () => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default Comments
+export default Comments;
