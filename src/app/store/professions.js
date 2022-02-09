@@ -35,7 +35,7 @@ const isOutdated = (date) => {
 export const loadProfessionsList = () => async (dispatch, getState) => {
    const { lastFetch } = getState().professions
    if (isOutdated(lastFetch)) {
-      dispatch(professionsRequestFailed())
+      dispatch(professionsRequested())
       try {
          const { content } = await professionService.get()
          dispatch(professionsReceived(content))
@@ -51,7 +51,6 @@ export const getProfessionsById = (professionId) => (state) => {
    if (state.professions.entities) {
       return state.professions.entities.find((profession) => profession._id === professionId)
    }
-   return {}
 }
 
 export default professionReducer
