@@ -2,6 +2,7 @@ import {createAction, createSlice} from '@reduxjs/toolkit'
 import userService from '../services/user.service'
 import authService from '../services/auth.service'
 import localStorageService from '../services/localStorage.service'
+import getRandomInt from '../utils/getRandomInt'
 
 const usersSlice = createSlice({
    name: 'users',
@@ -29,6 +30,9 @@ const usersSlice = createSlice({
       },
       authRequestFailed: (state, action) => {
          state.error = action.payload
+      },
+      userCreated: (state, action) => {
+         state.entities.push(action.payload)
       }
    }
 })
@@ -39,10 +43,13 @@ const {
    usersReceived,
    usersRequestFailed,
    authRequestSuccess,
-   authRequestFailed
+   authRequestFailed,
+   userCreated,
 } = actions
 
 const authRequested = createAction('users/authRequested')
+const userCreateRequested = createAction('users/userCreateRequested')
+const createUserFailed = createAction('users/userCreateRequested')
 
 export const signUp =
    ({ email, password, ...rest }) =>
@@ -52,8 +59,32 @@ export const signUp =
       const data = await authService.register({email, password})
       localStorageService.setTokens(data)
       dispatch(authRequestSuccess({userId: data.localId }))
+      dispatch(createUser({
+         _id: data.localId,
+         email,
+         rate: getRandomInt (1, 5),
+         completedMeetings: getRandomInt (0, 200),
+         image: `https://avatars.dicebear.com/api/avataaars/${(
+             Math.random() + 1
+         )
+             .toString(36)
+             .substring(7)}.svg`,
+         ...rest
+     }))
    } catch (e) {
       dispatch(authRequestFailed(e.message))
+   }
+}
+
+function createUser(payload) {
+   return async function(dispatch) {
+      dispatch(userCreateRequested())
+      try {
+         const { content } = await userService.create(payload)
+         dispatch(userCreated(content))
+      } catch (error) {
+         dispatch(createUserFailed(error.message))
+      }
    }
 }
 
