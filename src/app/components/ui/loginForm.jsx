@@ -4,6 +4,8 @@ import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../store/users";
 
 const LoginForm = () => {
     const [data, setData] = useState({
@@ -12,7 +14,7 @@ const LoginForm = () => {
         stayOn: false
     });
     const history = useHistory();
-    const { logIn } = useAuth();
+    const dispatch = useDispatch()
     const [errors, setErrors] = useState({});
     const [enterError, setEnterError] = useState(null);
     const handleChange = (target) => {
@@ -45,23 +47,17 @@ const LoginForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
+        const redirect = history.location.state 
+            ? history.location.state.from.pathname
+            : "/"
 
-        try {
-            await logIn(data);
-
-            history.push(
-                history.location.state
-                    ? history.location.state.from.pathname
-                    : "/"
-            );
-        } catch (error) {
-            setEnterError(error.message);
-        }
+        dispatch(logIn({ payload: data, redirect }))
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
