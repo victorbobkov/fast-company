@@ -13,7 +13,7 @@ const UsersLoader = () => {
     return children
 }
 
-UsersLoader.PropTypes = {
+UsersLoader.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 }
 
