@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
+import { validator } from "../../utils/ validator";
 import TextField from "../common/form/textField";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import {useDispatch, useSelector} from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { getQualities } from "../../store/qualities";
-import { getProfessions } from '../../store/professions'
-import {signUp} from '../../store/users'
+import { getProfessions } from "../../store/professions";
+import { signUp } from "../../store/users";
 
 const RegisterForm = () => {
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -28,7 +27,8 @@ const RegisterForm = () => {
         label: q.name,
         value: q._id
     }));
-    const professions = useSelector(getProfessions())
+    const professions = useSelector(getProfessions());
+
     const professionsList = professions.map((p) => ({
         label: p.name,
         value: p._id
@@ -96,7 +96,7 @@ const RegisterForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit =  (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -104,7 +104,7 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-        dispatch(signUp(newData))
+        dispatch(signUp(newData));
     };
 
     return (
