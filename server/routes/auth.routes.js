@@ -12,36 +12,38 @@ const router = express.Router({ mergeParams: true })
 // 4. create user
 // 5. generate jwt-tokens
 router.post('/signUp', async (req, res) => {
-    try {
-        const { email, password } = req.body
+   try {
+      const { email, password } = req.body
 
-        const existingUser = await User.findOne({ email: email })
-        if (existingUser) {
-            return res.status(400).json({
-                error: {
-                    message: 'EMAIL_EXISTS',
-                    code: 400
-                }
-            })
-        }
+      const existingUser = await User.findOne({ email })
 
-        const hashedPassword = await bcrypt.hash(password, 12)
+      if (existingUser) {
+         return res.status(400).json({
+            error: {
+               message: 'EMAIL_EXISTS',
+               code: 400
+            }
+         })
+      }
 
-        const newUser = await User.create({
-            ...generateUserData(),
-            ...req.body,
-            password: hashedPassword,
-        })
+      const hashedPassword = await bcrypt.hash(password, 12)
 
-        const tokens = tokenService.generate({ _id: newUser._id })
+      const newUser = await User.create({
+         ...generateUserData(),
+         ...req.body,
+         password: hashedPassword,
+      })
 
-        res.status(201).send({ ...tokens, userId: newUser._id })
+      const tokens = tokenService.generate({ _id: newUser._id })
 
-    } catch (e) {
-        res.status(500).json({
-            message: 'Internal Server Error. Try again later'
-        })
-    }
+      res.status(201).send({ ...tokens, userId: newUser._id })
+
+   } catch (e) {
+      res.status(500).json({
+         message: 'На сервере произошла ошибка. Попробуйте позже'
+      })
+      console.log(e)
+   }
 })
 
 router.post('/signInWithPassword', async (req, res) => {
