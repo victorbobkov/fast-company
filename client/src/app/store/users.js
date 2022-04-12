@@ -2,7 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
-import { generetaAuthError } from "../utils/generateAuthError";
+import { generateAuthError } from "../utils/generateAuthError";
 import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 const initialState = localStorageService.getAccessToken()
@@ -97,7 +97,7 @@ export const login =
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
-                const errorMessage = generetaAuthError(message);
+                const errorMessage = generateAuthError(message);
                 dispatch(authRequestFailed(errorMessage));
             } else {
                 dispatch(authRequestFailed(error.message));
