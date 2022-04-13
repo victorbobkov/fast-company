@@ -1,5 +1,7 @@
+// 1. У любого пользователя будет как минимум в БД qualities & professions
+// 2. Они равны mock данным
 const Profession = require('../models/Profession')
-const Quality = require('../models/Qualitiy')
+const Quality = require('../models/Quality')
 const professionMock = require('../mock/professions.json')
 const qualitiesMock = require('../mock/qualities.json')
 
@@ -10,7 +12,7 @@ module.exports = async () => {
    }
 
    const qualities = await Quality.find()
-   if (qualities.length !== qualitiesMock.length) {
+   if (qualities.length !== professionMock.length) {
       await createInitialEntity(Quality, qualitiesMock)
    }
 }
