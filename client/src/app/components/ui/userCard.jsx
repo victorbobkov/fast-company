@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "../../store/users";
 const UserCard = ({ user }) => {

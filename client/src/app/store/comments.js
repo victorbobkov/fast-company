@@ -1,6 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
-
 const commentsSlice = createSlice({
     name: "comments",
     initialState: {
