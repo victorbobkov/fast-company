@@ -14,12 +14,12 @@ const professionsSlice = createSlice({
         professionsRequested: (state) => {
             state.isLoading = true;
         },
-        professionsReceved: (state, action) => {
+        professionsReceived: (state, action) => {
             state.entities = action.payload;
             state.lastFetch = Date.now();
             state.isLoading = false;
         },
-        professionsRequestFiled: (state, action) => {
+        professionsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         }
@@ -27,7 +27,7 @@ const professionsSlice = createSlice({
 });
 
 const { reducer: professionsReducer, actions } = professionsSlice;
-const { professionsRequested, professionsReceved, professionsRequestFiled } =
+const { professionsRequested, professionsReceived, professionsRequestFailed } =
     actions;
 
 export const loadProfessionsList = () => async (dispatch, getState) => {
@@ -37,16 +37,16 @@ export const loadProfessionsList = () => async (dispatch, getState) => {
         dispatch(professionsRequested());
         try {
             const { content } = await professionService.get();
-            dispatch(professionsReceved(content));
+            dispatch(professionsReceived(content));
         } catch (error) {
-            dispatch(professionsRequestFiled(error.message));
+            dispatch(professionsRequestFailed(error.message));
         }
     }
 };
 export const getProfessions = () => (state) => state.professions.entities;
 export const getProfessionsLoadingStatus = () => (state) =>
     state.professions.isLoading;
-export const getProfessionbyId = (id) => (state) => {
+export const getProfessionById = (id) => (state) => {
     if (state.professions.entities) {
         return state.professions.entities.find((p) => p._id === id);
     }

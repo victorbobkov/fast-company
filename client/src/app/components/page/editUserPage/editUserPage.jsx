@@ -81,7 +81,7 @@ const EditUserPage = () => {
         }
     }, [data]);
 
-    const validatorConfog = {
+    const validatorConfig = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -105,7 +105,7 @@ const EditUserPage = () => {
         }));
     };
     const validate = () => {
-        const errors = validator(data, validatorConfog);
+        const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -132,7 +132,7 @@ const EditUserPage = () => {
                                 error={errors.email}
                             />
                             <SelectField
-                                label="Выбери свою профессию"
+                                label="Выберите свою профессию"
                                 defaultOption="Choose..."
                                 name="profession"
                                 options={professionsList}
@@ -156,7 +156,7 @@ const EditUserPage = () => {
                                 options={qualitiesList}
                                 onChange={handleChange}
                                 name="qualities"
-                                label="Выберите ваши качесвта"
+                                label="Выберите ваши качества"
                             />
                             <button
                                 type="submit"

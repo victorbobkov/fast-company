@@ -1,4 +1,4 @@
-export function generetaAuthError(message) {
+export function generateAuthError(message) {
     switch (message) {
         case "INVALID_PASSWORD":
             return "Email или пароль введены некорректно";

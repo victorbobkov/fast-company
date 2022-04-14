@@ -41,7 +41,7 @@ const RegisterForm = () => {
             [target.name]: target.value
         }));
     };
-    const validatorConfog = {
+    const validatorConfig = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -55,13 +55,13 @@ const RegisterForm = () => {
                 message: "Имя обязательно для заполнения"
             },
             min: {
-                message: "Имя должено состаять миниму из 3 символов",
+                message: "Имя должено состоять минимум из 3 символов",
                 value: 3
             }
         },
         password: {
             isRequired: {
-                message: "Пароль обязательна для заполнения"
+                message: "Пароль обязателен для заполнения"
             },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
@@ -70,7 +70,7 @@ const RegisterForm = () => {
                 message: "Пароль должен содержать хотя бы одно число"
             },
             min: {
-                message: "Пароль должен состаять миниму из 8 символов",
+                message: "Пароль должен состоять минимум из 8 символов",
                 value: 8
             }
         },
@@ -82,7 +82,7 @@ const RegisterForm = () => {
         licence: {
             isRequired: {
                 message:
-                    "Вы не можете использовать наш сервис без подтреврждения лицензионного соглашения"
+                    "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
             }
         }
     };
@@ -90,7 +90,7 @@ const RegisterForm = () => {
         validate();
     }, [data]);
     const validate = () => {
-        const errors = validator(data, validatorConfog);
+        const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -132,7 +132,7 @@ const RegisterForm = () => {
                 error={errors.password}
             />
             <SelectField
-                label="Выбери свою профессию"
+                label="Выберите свою профессию"
                 defaultOption="Choose..."
                 name="profession"
                 options={professionsList}
@@ -155,7 +155,7 @@ const RegisterForm = () => {
                 options={qualitiesList}
                 onChange={handleChange}
                 name="qualities"
-                label="Выберите ваши качесвта"
+                label="Выберите ваши качества"
             />
             <CheckBoxField
                 value={data.licence}

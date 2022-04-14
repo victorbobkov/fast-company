@@ -20,7 +20,7 @@ const AppLoader = ({ children }) => {
             dispatch(loadUsersList());
         }
     }, [isLoggedIn]);
-    if (usersStatusLoading) return "loading";
+    if (usersStatusLoading) return "Loading...";
     return children;
 };
 

@@ -2,7 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
-import { generetaAuthError } from "../utils/generateAuthError";
+import { generateAuthError } from "../utils/generateAuthError";
 import history from "../utils/history";
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -29,7 +29,7 @@ const usersSlice = createSlice({
         usersRequested: (state) => {
             state.isLoading = true;
         },
-        usersReceved: (state, action) => {
+        usersReceived: (state, action) => {
             state.entities = action.payload;
             state.dataLoaded = true;
             state.isLoading = false;
@@ -54,7 +54,7 @@ const usersSlice = createSlice({
             state.auth = null;
             state.dataLoaded = false;
         },
-        userUpdateSuccessed: (state, action) => {
+        userUpdateSucceeded: (state, action) => {
             state.entities[
                 state.entities.findIndex((u) => u._id === action.payload._id)
             ] = action.payload;
@@ -68,12 +68,12 @@ const usersSlice = createSlice({
 const { reducer: usersReducer, actions } = usersSlice;
 const {
     usersRequested,
-    usersReceved,
+    usersReceived,
     usersRequestFiled,
     authRequestFailed,
     authRequestSuccess,
     userLoggedOut,
-    userUpdateSuccessed
+    userUpdateSucceeded
 } = actions;
 
 const authRequested = createAction("users/authRequested");
@@ -93,7 +93,7 @@ export const login =
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
-                const errorMessage = generetaAuthError(message);
+                const errorMessage = generateAuthError(message);
                 dispatch(authRequestFailed(errorMessage));
             } else {
                 dispatch(authRequestFailed(error.message));
@@ -122,7 +122,7 @@ export const loadUsersList = () => async (dispatch) => {
     dispatch(usersRequested());
     try {
         const { content } = await userService.get();
-        dispatch(usersReceved(content));
+        dispatch(usersReceived(content));
     } catch (error) {
         dispatch(usersRequestFiled(error.message));
     }
@@ -131,7 +131,7 @@ export const updateUser = (payload) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {
         const { content } = await userService.update(payload);
-        dispatch(userUpdateSuccessed(content));
+        dispatch(userUpdateSucceeded(content));
         history.push(`/users/${content._id}`);
     } catch (error) {
         dispatch(userUpdateFailed(error.message));
